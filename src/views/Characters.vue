@@ -24,6 +24,7 @@
         :key="index"
         :image="character.image"
         :name="character.name"
+        :id="character.id"
       ></character-card>
     </div>
   </div>

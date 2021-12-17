@@ -18,6 +18,7 @@ const state: StoreState = {
     prev: null,
     next: null,
   },
+  currentCharacter: null,
 };
 
 const mutations = {
@@ -26,6 +27,10 @@ const mutations = {
   },
   setInfo(state: StoreState, info: ResultInfo) {
     Vue.set(state, "info", info);
+  },
+
+  setCurrentCharacter(state: StoreState, character: Character) {
+    Vue.set(state, "currentCharacter", character);
   },
 };
 
@@ -40,7 +45,7 @@ function buildURL(params: CharacterFilterParams): string {
   return url.toString();
 }
 
-async function makeRequest(
+async function makeRequestGetAll(
   url: string
 ): Promise<{ charactersResult: Character[]; resultInfo: ResultInfo }> {
   let charactersResult: Character[];
@@ -62,12 +67,25 @@ async function makeRequest(
   return { charactersResult, resultInfo };
 }
 
+async function makeRequestGetOne(url: string): Promise<Character | null> {
+  let character: Character | null;
+
+  try {
+    const response = await axios.get(url);
+    character = response.data;
+  } catch (error) {
+    // handle the case of no matching characters
+    character = null;
+  }
+  return character;
+}
+
 const actions = {
   async fetchWithPagination(
     context: ActionContext<StoreState, StoreState>,
     urlWithPagination: string
   ): Promise<void> {
-    const { resultInfo, charactersResult } = await makeRequest(
+    const { resultInfo, charactersResult } = await makeRequestGetAll(
       urlWithPagination
     );
     context.commit("setCharacters", charactersResult);
@@ -79,9 +97,24 @@ const actions = {
     filterParams: CharacterFilterParams
   ): Promise<void> {
     const url = buildURL(filterParams);
-    const { resultInfo, charactersResult } = await makeRequest(url);
+    const { resultInfo, charactersResult } = await makeRequestGetAll(url);
     context.commit("setCharacters", charactersResult);
     context.commit("setInfo", resultInfo);
+  },
+
+  async changeCurrentCharacter(
+    context: ActionContext<StoreState, StoreState>,
+    characterId: number
+  ): Promise<void> {
+    let character;
+    const isAlreadyFetched = (character = state.characters.find(
+      (c) => c.id === characterId
+    ));
+    if (!isAlreadyFetched) {
+      const url = `https://rickandmortyapi.com/api/character/${characterId}`;
+      character = await makeRequestGetOne(url);
+    }
+    context.commit("setCurrentCharacter", character);
   },
 };
 

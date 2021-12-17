@@ -1,8 +1,10 @@
 <template>
-  <div class="card">
-    <img :src="image" />
-    <div>{{ name }}</div>
-  </div>
+  <router-link :to="{ name: 'CharacterDetails', params: { id: id } }">
+    <div class="card">
+      <img :src="image" />
+      <div>{{ name }}</div>
+    </div>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -14,6 +16,10 @@ export default Vue.extend({
     return {};
   },
   props: {
+    id: {
+      type: Number,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
