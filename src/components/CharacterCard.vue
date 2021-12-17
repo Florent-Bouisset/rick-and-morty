@@ -11,17 +11,17 @@ import Vue from "vue";
 export default Vue.extend({
   name: "",
   data() {
-    return {
-      //   name: "Toxic Rick",
-      //   image: "https://rickandmortyapi.com/api/character/avatar/361.jpeg"
-    };
+    return {};
   },
   props: {
     name: {
       type: String,
       required: true,
     },
-    image: { type: String, required: true },
+    image: {
+      type: String,
+      required: true,
+    },
   },
   computed: {},
   methods: {},
