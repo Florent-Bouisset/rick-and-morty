@@ -3,6 +3,12 @@ export interface Character {
   image: string;
 }
 
+export type Status = "alive" | "dead" | "unknown";
+export interface CharacterFilterParams {
+  name: string;
+  status: Status;
+}
+
 export interface ResultInfo {
   count: number;
   pages: number;

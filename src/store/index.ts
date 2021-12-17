@@ -1,6 +1,11 @@
 import Vue from "vue";
 import Vuex, { ActionContext } from "vuex";
-import { Character, ResultInfo, StoreState } from "@/types";
+import {
+  Character,
+  CharacterFilterParams,
+  ResultInfo,
+  StoreState,
+} from "@/types";
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -24,10 +29,13 @@ const mutations = {
   },
 };
 
-function buildURL(name?: string): string {
+function buildURL(params: CharacterFilterParams): string {
   const url = new URL("https://rickandmortyapi.com/api/character/");
-  if (name) {
-    url.searchParams.append("name", name);
+  if (params.name) {
+    url.searchParams.append("name", params.name);
+  }
+  if (params.status) {
+    url.searchParams.append("status", params.status);
   }
   return url.toString();
 }
@@ -55,16 +63,6 @@ async function makeRequest(
 }
 
 const actions = {
-  async fetchCharacters(
-    context: ActionContext<StoreState, StoreState>,
-    name?: string
-  ): Promise<void> {
-    const url = buildURL(name);
-    const { resultInfo, charactersResult } = await makeRequest(url);
-    context.commit("setCharacters", charactersResult);
-    context.commit("setInfo", resultInfo);
-  },
-
   async fetchWithPagination(
     context: ActionContext<StoreState, StoreState>,
     urlWithPagination: string
@@ -72,6 +70,16 @@ const actions = {
     const { resultInfo, charactersResult } = await makeRequest(
       urlWithPagination
     );
+    context.commit("setCharacters", charactersResult);
+    context.commit("setInfo", resultInfo);
+  },
+
+  async fetchCharacters(
+    context: ActionContext<StoreState, StoreState>,
+    filterParams: CharacterFilterParams
+  ): Promise<void> {
+    const url = buildURL(filterParams);
+    const { resultInfo, charactersResult } = await makeRequest(url);
     context.commit("setCharacters", charactersResult);
     context.commit("setInfo", resultInfo);
   },

@@ -7,7 +7,16 @@
       <button :disabled="!info.next" @click="goNextPage()">next page</button>
       <div>{{ info.count }} results found</div>
       <input v-model="searchInput" />
-      <button @click="searchWithName()">Search</button>
+      <button @click="search()">Search</button>
+
+      <input type="radio" v-model="statusInput" value="alive" />
+      <label>Alive</label>
+
+      <input type="radio" v-model="statusInput" value="dead" />
+      <label for="one">Dead</label>
+
+      <input type="radio" v-model="statusInput" value="unkown" />
+      <label for="one">Unknown</label>
     </div>
     <div class="galery">
       <character-card
@@ -24,7 +33,7 @@
 import CharacterCard from "@/components/CharacterCard.vue";
 import Vue from "vue";
 import { mapState } from "vuex";
-import { StoreState } from "@/types";
+import { CharacterFilterParams, StoreState } from "@/types";
 
 export default Vue.extend({
   components: { CharacterCard },
@@ -32,6 +41,7 @@ export default Vue.extend({
   data() {
     return {
       searchInput: "",
+      statusInput: "",
     };
   },
   props: {},
@@ -42,9 +52,13 @@ export default Vue.extend({
     }),
   },
   methods: {
-    searchWithName() {
-      const searchInput = this.searchInput.toLowerCase();
-      this.$store.dispatch("fetchCharacters", searchInput);
+    search() {
+      const filter = {
+        name: this.searchInput.toLowerCase(),
+        status: this.statusInput,
+      } as CharacterFilterParams;
+
+      this.$store.dispatch("fetchCharacters", filter);
     },
     goPrevPage() {
       this.$store.dispatch("fetchWithPagination", this.info.prev);
@@ -55,7 +69,7 @@ export default Vue.extend({
     },
   },
   created() {
-    this.$store.dispatch("fetchCharacters");
+    this.search();
   },
 });
 </script>
