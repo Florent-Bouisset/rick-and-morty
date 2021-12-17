@@ -1,9 +1,9 @@
 <template>
   <div class="galery">
-      <character-card></character-card>
-      <character-card></character-card>
-      <character-card></character-card>
-      <character-card></character-card>
+    <character-card></character-card>
+    <character-card></character-card>
+    <character-card></character-card>
+    <character-card></character-card>
   </div>
 </template>
 
