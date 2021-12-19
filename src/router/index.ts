@@ -1,14 +1,21 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
-    name: "Home",
-    component: Home,
+    path: "/characters/:id",
+    name: "CharacterDetails",
+    components: {
+      default: () =>
+        import(/* webpackChunkName: "characters" */ "../views/Characters.vue"),
+
+      modal: () =>
+        import(
+          /* webpackChunkName: "characters-details" */ "../views/CharactersDetails.vue"
+        ),
+    },
   },
   {
     path: "/characters",
@@ -17,12 +24,8 @@ const routes: Array<RouteConfig> = [
       import(/* webpackChunkName: "characters" */ "../views/Characters.vue"),
   },
   {
-    path: "/characters/:id",
-    name: "CharacterDetails",
-    component: () =>
-      import(
-        /* webpackChunkName: "characters-details" */ "../views/CharactersDetails.vue"
-      ),
+    path: "*",
+    redirect: { name: "Characters" },
   },
 ];
 
