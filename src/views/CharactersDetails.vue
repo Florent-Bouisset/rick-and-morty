@@ -12,8 +12,9 @@
           <div>Gender: {{ character.gender }}</div>
           <div>Status: {{ character.status }}</div>
           <div>Species: {{ character.species }}</div>
+
           <div class="infoWithIcon">
-            <img :src="require('@/assets/icons/map-marker.png')" /> Earth
+            <custom-icon iconName="map-marker" /> Earth
           </div>
         </div>
       </div>
@@ -30,9 +31,10 @@ import { StoreState } from "@/types";
 import Vue from "vue";
 import { mapState } from "vuex";
 import Modal from "@/components/Modal.vue";
+import CustomIcon from "@/components/CustomIcon.vue";
 
 export default Vue.extend({
-  components: { Modal },
+  components: { Modal, CustomIcon },
   data() {
     return {
       showModal: true,

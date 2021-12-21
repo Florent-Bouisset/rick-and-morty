@@ -1,13 +1,22 @@
 <template>
   <div>
     <div class="searchHeader">
+      <input type="text" v-model="searchInput" placeholder="Cowboy Morty" />
+      <button @click="search()">
+        <span style="margin-right: 8px"> Search </span>
+        <custom-icon iconName="search" />
+      </button>
+      <div>{{ info.count }} results found</div>
+
       <button :disabled="!info.prev" @click="goPrevPage()">
+        <custom-icon iconName="left-chevron" />
         previous page
       </button>
-      <button :disabled="!info.next" @click="goNextPage()">next page</button>
-      <div>{{ info.count }} results found</div>
-      <input v-model="searchInput" />
-      <button @click="search()">Search</button>
+
+      <button :disabled="!info.next" @click="goNextPage()">
+        next page
+        <custom-icon iconName="right-chevron" />
+      </button>
 
       <input type="radio" v-model="statusInput" value="alive" />
       <label>Alive</label>
@@ -35,9 +44,10 @@ import CharacterCard from "@/components/CharacterCard.vue";
 import Vue from "vue";
 import { mapState } from "vuex";
 import { CharacterFilterParams, StoreState } from "@/types";
+import CustomIcon from "@/components/CustomIcon.vue";
 
 export default Vue.extend({
-  components: { CharacterCard },
+  components: { CharacterCard, CustomIcon },
   name: "",
   data() {
     return {
@@ -88,7 +98,13 @@ export default Vue.extend({
   margin-bottom: 20px;
 }
 
-input {
-  margin: 0 10px 0 10px;
+input[type="radio"] {
+  margin: 0 10px;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

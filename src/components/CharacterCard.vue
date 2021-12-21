@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'CharacterDetails', params: { id } }">
+  <router-link :to="{ name: 'CharacterDetails', params: { id } }" tag="div">
     <div class="card">
       <img :src="image" />
       <div>{{ name }}</div>
@@ -37,5 +37,6 @@ export default Vue.extend({
 <style scoped>
 .card {
   padding: 10px;
+  margin: 4px;
 }
 </style>
