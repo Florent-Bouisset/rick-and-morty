@@ -24,7 +24,7 @@
       <input type="radio" v-model="statusInput" value="dead" />
       <label for="one">Dead</label>
 
-      <input type="radio" v-model="statusInput" value="unkown" />
+      <input type="radio" v-model="statusInput" value="unknown" />
       <label for="one">Unknown</label>
     </div>
     <div class="galery">
