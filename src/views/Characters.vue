@@ -36,6 +36,9 @@
         :id="character.id"
       ></character-card>
     </div>
+    <div v-if="!characters.length">
+      No characters found for that search, verify your input!
+    </div>
   </div>
 </template>
 

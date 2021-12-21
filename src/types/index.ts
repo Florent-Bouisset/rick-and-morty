@@ -6,6 +6,9 @@ export interface Character {
   status: Status;
   gender: string;
   species: string;
+  location: {
+    name: string;
+  };
 }
 
 export interface CharacterFilterParams {

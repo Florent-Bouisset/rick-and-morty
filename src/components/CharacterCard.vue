@@ -38,5 +38,6 @@ export default Vue.extend({
 .card {
   padding: 10px;
   margin: 4px;
+  cursor: pointer;
 }
 </style>

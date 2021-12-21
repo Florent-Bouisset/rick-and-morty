@@ -6,15 +6,14 @@
     </template>
     <template slot="body">
       <div>
-        <div v-if="!character">No character matching for this id</div>
+        <div v-if="!character" />
         <div v-else>
           <img :src="character.image" />
           <div>Gender: {{ character.gender }}</div>
           <div>Status: {{ character.status }}</div>
           <div>Species: {{ character.species }}</div>
-
           <div class="infoWithIcon">
-            <custom-icon iconName="map-marker" /> Earth
+            <custom-icon iconName="map-marker" /> {{ character.location.name }}
           </div>
         </div>
       </div>
