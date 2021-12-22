@@ -65,6 +65,18 @@ export default Vue.extend({
       info: (state) => (state as StoreState).info,
     }),
   },
+  watch: {
+    searchInput: {
+      handler() {
+        this.search();
+      },
+    },
+    statusInput: {
+      handler() {
+        this.search();
+      },
+    },
+  },
   methods: {
     search() {
       const filter = {
